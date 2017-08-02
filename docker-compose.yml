@@ -1,9 +1,10 @@
-version: "2.0"
+version: "3"
 services:
   blog:
     ports:
       - "12368:2368"
     image: ghost:latest
+    container_name: ghost
     volumes:
       - ghost_apps:/var/lib/ghost/content/apps
       - ghost_data:/var/lib/ghost/content/data
@@ -13,10 +14,10 @@ services:
 
 volumes:
    ghost_apps:
-      driver: local
+    external: true
    ghost_data:
-      driver: local
+    external: true
    ghost_images:
-      driver: local
+    external: true
    ghost_themes:
-      driver: local
+    external: true
