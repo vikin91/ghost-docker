@@ -1,9 +1,6 @@
 #!/bin/bash
 
-if ! which -s "docker"; then
-	echo "Error: cannot find docker binary"
-	exit 1
-fi
+source "lib.sh"
 
 ARCHIVE="${1}"
 
@@ -12,9 +9,12 @@ if [ "$#" -ne 1 ]; then
 	exit 1
 fi
 
-DOCKER="$(which docker)"
-
 TMP="/tmp/ghost-backup-restore"
+
+if [ -d "${TMP}" ];then
+	rm -rf "${TMP}"
+fi
+
 mkdir -p "${TMP}"
 
 tar -xzf "${ARCHIVE}" -C "${TMP}"

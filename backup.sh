@@ -1,13 +1,8 @@
 #!/bin/bash
 
-if ! which -s "docker"; then
-	echo "Error: cannot find docker binary"
-	exit 1
-fi
+source "lib.sh"
 
-VOLUMES=( "ghost_apps" "ghost_data" "ghost_images" "ghost_themes" )
 DIRS=( )
-DOCKER="$(which docker)"
 
 # Copy data from docker volumes
 for VOL in "${VOLUMES[@]}"; do
