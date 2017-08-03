@@ -12,4 +12,5 @@ echo "Setting ghost URL to ${PAGE_URL}"
 "${DOCKER_COMPOSE}" exec blog ghost config url "${PAGE_URL}"
 
 echo "Restarting ghost"
+
 "${DOCKER_COMPOSE}" restart blog

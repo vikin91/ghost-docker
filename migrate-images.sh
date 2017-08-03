@@ -11,5 +11,3 @@ for IMAGE in ${IMAGES}; do
 	echo "Copying ${IMAGE}"
 	"${DOCKER}" cp "${IMAGE}" ghost:"${GHOST_CONTENT_DEST}"/images/
 done
-
-
