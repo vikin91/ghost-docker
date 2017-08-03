@@ -8,7 +8,7 @@ Run `./boostrap.sh`
 
 ## Start
 
-`docker-compose up -d`
+Run `./start.sh`
 
 ## Stop
 
@@ -28,4 +28,4 @@ If needed, change image version in `docker-compose.yml` and run `./update.sh`
 
 ## Migrate from 0.1
 
-Tune and run `./migrate-images.sh`
+Tune paths if needed and run `./migrate-images.sh`
