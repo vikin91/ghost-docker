@@ -2,16 +2,24 @@
 
 source "lib.sh"
 
+set -e
+
 DIRS=( )
+
+"${DOCKER}" rm helper || echo "No need to remove helper. Continuing"
+
+echo "Stopping ghost"
+"${DOCKER_COMPOSE}" down
 
 # Copy data from docker volumes
 for VOL in "${VOLUMES[@]}"; do
 	# Equivalent: DIR="$(echo ${VOL} | sed 's/ghost_//g' )"
 	DIR="${VOL//ghost_/}"
 	DIRS+=( "${DIR}" )
-	"${DOCKER}" run --rm -v "${VOL}:/${DIR}" --name helper busybox true
+	"${DOCKER}" run -v "${VOL}:/${DIR}" --name helper busybox true
 	echo "Copying $DIR"
 	"${DOCKER}" cp -L "helper:/${DIR}" .
+	"${DOCKER}" rm helper
 done
 
 DATE="$(date +%Y-%m-%d-%H-%M-%S)"
@@ -25,3 +33,4 @@ for DIR in "${DIRS[@]}"; do
 	rm -r "${DIR}"
 done
 
+"./start.sh"

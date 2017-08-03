@@ -20,8 +20,4 @@ for VOL in "${VOLUMES[@]}"; do
 done
 
 # Start
-"${DOCKER_COMPOSE}" up -d
-
-# Configure URL
-"${DOCKER_COMPOSE}" exec blog ghost config url "${PAGE_URL}"
-"${DOCKER_COMPOSE}" restart blog
+"./start.sh"
