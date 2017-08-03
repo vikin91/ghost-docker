@@ -7,7 +7,7 @@ BACKUP_DIR=/home/piotr/ghost-backup/
 BACKUP_RETENTION_PERIOD=120
 LOG_FILE=/var/log/backup-ghost.log
 
-DATE=$(date '+%Y/%m/%Y-%m-%d-%H-%S')
+DATE=$(date '+%Y-%m-%d-%H:%M:%S')
 
 # Make backup directory
 mkdir -p ${BACKUP_DIR}
