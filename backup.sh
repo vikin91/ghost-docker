@@ -16,7 +16,7 @@ for VOL in "${VOLUMES[@]}"; do
 	"${DOCKER}" run -v "${VOL}:/${DIR}" --name helper busybox true
 	echo "Copying $DIR"
 	"${DOCKER}" cp -L "helper:/${DIR}" .
-	"${DOCKER}" rm helper > /dev/null 2>&1
+	"${DOCKER}" rm helper
 done
 
 DATE="$(date +%Y-%m-%d-%H-%M-%S)"
