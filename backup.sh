@@ -9,10 +9,9 @@ for VOL in "${VOLUMES[@]}"; do
 	# Equivalent: DIR="$(echo ${VOL} | sed 's/ghost_//g' )"
 	DIR="${VOL//ghost_/}"
 	DIRS+=( "${DIR}" )
-	"${DOCKER}" run -v "${VOL}:/${DIR}" --name helper busybox true
+	"${DOCKER}" run --rm -v "${VOL}:/${DIR}" --name helper busybox true
 	echo "Copying $DIR"
 	"${DOCKER}" cp -L "helper:/${DIR}" .
-	"${DOCKER}" rm helper > /dev/null 2>&1
 done
 
 DATE="$(date +%Y-%m-%d-%H-%M-%S)"

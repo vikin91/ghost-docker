@@ -25,9 +25,8 @@ EXTRACTED_DIRS=( $(find "${TMP}" -mindepth 1 -maxdepth 1 -type d) )
 for DIR in "${EXTRACTED_DIRS[@]}"; do
 	BASE_DIR="$(basename "${DIR}")"
 	echo "Restoring ${TMP}/${BASE_DIR} to docker volume ghost_${BASE_DIR}"
-	"${DOCKER}" run -v "ghost_${BASE_DIR}:/${BASE_DIR}" --name helper busybox true
+	"${DOCKER}" run --rm -v "ghost_${BASE_DIR}:/${BASE_DIR}" --name helper busybox true
 	"${DOCKER}" cp -L "${TMP}/${BASE_DIR}" helper:/"${BASE_DIR}"
-	"${DOCKER}" rm helper > /dev/null 2>&1
 done
 
 
