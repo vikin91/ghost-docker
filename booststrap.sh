@@ -1,12 +1,12 @@
 #!/bin/bash
 
 source "lib.sh"
+source "config.sh"
 
 if [ ! -f "docker-compose.yml" ]; then
 	echo "Error: file docker-compose.yml does not exist in current directory"
 	exit 1
 fi
-
 
 # Create volumes if required
 for VOL in "${VOLUMES[@]}"; do
@@ -21,7 +21,7 @@ done
 
 # Start
 "${DOCKER_COMPOSE}" up -d
-# Add config file
-"${DOCKER}" cp config.production.json ghost:/var/lib/ghost/config.production.json
 
+# Configure URL
+"${DOCKER_COMPOSE}" exec blog ghost config url "${PAGE_URL}"
 "${DOCKER_COMPOSE}" restart blog
