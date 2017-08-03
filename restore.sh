@@ -31,7 +31,7 @@ for DIR in "${EXTRACTED_DIRS[@]}"; do
 	echo "Restoring ${TMP}/${BASE_DIR} to docker volume ghost_${BASE_DIR}"
 	"${DOCKER}" run -v "ghost_${BASE_DIR}:/${BASE_DIR}" --name helper busybox true
 	"${DOCKER}" cp -L "${TMP}/${BASE_DIR}" helper:/"${BASE_DIR}"
-	"${DOCKER}" rm helper
+	"${DOCKER}" rm helper > /dev/null 2>&1
 done
 
 "./start.sh"

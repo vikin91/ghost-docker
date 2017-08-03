@@ -16,7 +16,7 @@ for VOL in "${VOLUMES[@]}"; do
 	"${DOCKER}" run -v "${VOL}:/${DIR}" --name helper busybox true
 	echo "Copying $DIR"
 	"${DOCKER}" cp -L "helper:/${DIR}" .
-	"${DOCKER}" rm helper
+	"${DOCKER}" rm helper > /dev/null 2>&1
 done
 
 DATE="$(date +%Y-%m-%d-%H-%M-%S)"
@@ -29,4 +29,3 @@ tar cfz "${BACKUP_NAME}.gz" "${DIRS[@]}"
 for DIR in "${DIRS[@]}"; do
 	rm -r "${DIR}"
 done
-
