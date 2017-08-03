@@ -1,13 +1,15 @@
 #!/bin/bash
 
-if ! which -s "docker"; then
-	echo "Error: cannot find docker binary"
-	exit 1
-fi
+source "lib.sh"
 
-VOLUMES=( "ghost_apps" "ghost_data" "ghost_images" "ghost_themes" )
+set -e
+
 DIRS=( )
-DOCKER="$(which docker)"
+
+"${DOCKER}" rm helper || echo "No need to remove helper. Continuing"
+
+echo "Stopping ghost"
+"${DOCKER_COMPOSE}" down
 
 # Copy data from docker volumes
 for VOL in "${VOLUMES[@]}"; do
@@ -17,7 +19,7 @@ for VOL in "${VOLUMES[@]}"; do
 	"${DOCKER}" run -v "${VOL}:/${DIR}" --name helper busybox true
 	echo "Copying $DIR"
 	"${DOCKER}" cp -L "helper:/${DIR}" .
-	"${DOCKER}" rm helper > /dev/null 2>&1
+	"${DOCKER}" rm helper
 done
 
 DATE="$(date +%Y-%m-%d-%H-%M-%S)"
@@ -31,3 +33,4 @@ for DIR in "${DIRS[@]}"; do
 	rm -r "${DIR}"
 done
 
+"./start.sh"

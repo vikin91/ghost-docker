@@ -1,8 +1,8 @@
-version: "3"
+version: "2"
 services:
   blog:
     ports:
-      - "12368:2368"
+      - "2368:2368"
     image: ghost:latest
     container_name: ghost
     volumes:
@@ -11,6 +11,7 @@ services:
       - ghost_images:/var/lib/ghost/content/images
       - ghost_themes:/var/lib/ghost/content/themes
     restart: always
+    container_name: ghost
 
 volumes:
    ghost_apps:

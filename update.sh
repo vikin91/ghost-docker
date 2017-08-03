@@ -1,22 +1,16 @@
 #!/bin/bash
 
-if ! which -s "docker"; then
-	echo "Error: cannot find docker binary"
-	exit 1
-fi
+source "lib.sh"
+source "config.sh"
 
-if ! which -s "docker-compose"; then
-	echo "Error: cannot find docker-compose binary"
-	exit 1
-fi
-
-DOCKER="$(which docker)"
-DOCKER_COMPOSE="$(which docker-compose)"
 IMAGE_TO_REMOVE="$("${DOCKER}" images --filter=reference='ghost:latest' -q)"
 
 # TODO: check if update is required
 
+echo "Stopping ghost"
 "${DOCKER_COMPOSE}" down
 "${DOCKER}" stop "${IMAGE_TO_REMOVE}"
+echo "Removing cached ghost image"
 "${DOCKER}" rmi "${IMAGE_TO_REMOVE}"
-"${DOCKER_COMPOSE}" up -d
+
+"./start.sh"
