@@ -21,3 +21,7 @@ done
 
 # Start
 "${DOCKER_COMPOSE}" up -d
+# Add config file
+"${DOCKER}" cp config.production.json ghost:/var/lib/ghost/config.production.json
+
+"${DOCKER_COMPOSE}" restart blog

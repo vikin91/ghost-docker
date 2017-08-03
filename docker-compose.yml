@@ -11,6 +11,7 @@ services:
       - ghost_images:/var/lib/ghost/content/images
       - ghost_themes:/var/lib/ghost/content/themes
     restart: always
+    container_name: ghost
 
 volumes:
    ghost_apps:
