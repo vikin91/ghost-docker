@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if ! which "docker"; then
 	echo "Error: cannot find docker binary"
@@ -16,7 +16,7 @@ function num_volumes(){
 	if [ "$#" -ne 1 ]; then
 		echo "0"
 	fi
-	NUM_VOLUMES="$(docker volume ls | grep -c "${NAME}")"
+	NUM_VOLUMES="$(docker volume ls | grep -ic "\s${NAME}$")"
 	echo "${NUM_VOLUMES}"
 }
 
@@ -30,6 +30,9 @@ function volume_exists(){
 	return 1
 }
 
+export VOLUMES
 VOLUMES=( "ghost_apps" "ghost_data" "ghost_images" "ghost_themes" )
+export DOCKER
 DOCKER="$(which docker)"
+export DOCKER_COMPOSE
 DOCKER_COMPOSE="$(which docker-compose)"
