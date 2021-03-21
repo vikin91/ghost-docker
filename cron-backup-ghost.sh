@@ -10,12 +10,13 @@ LOG_FILE=/var/log/backup-ghost.log
 DATE=$(date '+%Y-%m-%d-%H:%M:%S')
 
 # Make backup directory
-mkdir -p ${BACKUP_DIR}
+mkdir -p "${BACKUP_DIR}"
 
 echo "${DATE} - Running ghost backup" >> $LOG_FILE
 cd "${DIR}" || echo "${DATE} - Error: can't cd into ${DIR}" >> $LOG_FILE
 
-"${BACKUP_SCRIPT}"
+"${BACKUP_SCRIPT}" "ghost"
+"${BACKUP_SCRIPT}" "ghost_beauty"
 
 echo "${DATE} - Moving backup to ${BACKUP_DIR} " >> $LOG_FILE
 mv ./*.tar.gz ${BACKUP_DIR}

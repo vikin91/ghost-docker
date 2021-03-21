@@ -1,8 +1,45 @@
 #!/bin/bash
 
-source "lib.sh"
-
 set -e
+
+if ! which "docker"; then
+	echo "Error: cannot find docker binary"
+	exit 1
+fi
+
+if ! which "docker-compose"; then
+	echo "Error: cannot find docker-compose binary"
+	exit 1
+fi
+
+NAME="${1:-ghost}"
+
+function num_volumes(){
+	local NAME
+	NAME=${1}
+	if [ "$#" -ne 1 ]; then
+		echo "0"
+	fi
+	NUM_VOLUMES="$(docker volume ls | grep -ic "\s${NAME}$")"
+	echo "${NUM_VOLUMES}"
+}
+
+function volume_exists(){
+	local NAME
+	NAME="${1}"
+	NUM="$(num_volumes "${NAME}")"
+	if [ "${NUM}" -gt "0" ]; then
+		return 0
+	fi
+	return 1
+}
+
+export VOLUMES
+VOLUMES=( "${NAME}_apps" "${NAME}_data" "${NAME}_images" "${NAME}_themes" )
+export DOCKER
+DOCKER="$(which docker)"
+export DOCKER_COMPOSE
+DOCKER_COMPOSE="$(which docker-compose)"
 
 DIRS=( )
 
@@ -20,7 +57,7 @@ for VOL in "${VOLUMES[@]}"; do
 done
 
 DATE="$(date +%Y-%m-%d-%H-%M-%S)"
-BACKUP_NAME="ghost-backup-${DATE}.tar"
+BACKUP_NAME="backup-${NAME}-${DATE}.tar"
 
 # Add dirs to tar archive
 tar cfz "${BACKUP_NAME}.gz" "${DIRS[@]}"

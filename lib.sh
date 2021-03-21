@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e 
+set -e
 
 if ! which "docker"; then
 	echo "Error: cannot find docker binary"
